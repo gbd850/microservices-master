@@ -1,0 +1,41 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+logging:
+  level:
+    root: INFO
+
+## Routes
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        ## Product Service
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/product
+        ## Order Service
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/order
+        ## Discovery Server
+        - id: discovery-server
+          uri: http://localhost:8761
+          predicates:
+            - Path=/eureka/web
+          filters:
+            - SetPath=/
+        ## Discovery Server Static Resources
+        - id: discovery-server-static
+          uri: http://localhost:8761
+          predicates:
+            - Path=/eureka/**
+
+server:
+  port: 8080
