@@ -17,3 +17,42 @@ eureka:
 
 server:
   port: 8081
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+# Resilience4j Properties
+resilience4j:
+  # Circuitbreaker Properties
+  circuitbreaker:
+    instances:
+      inventory:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+  # Timeout Properties
+  timelimiter:
+    instances:
+      inventory:
+        timeoutDuration: 3s
+  # Retry Properties
+  retry:
+    instances:
+      inventory:
+         maxAttempts: 3
+         waitDuration: 5s
+
