@@ -43,6 +43,13 @@ spring:
         jwt:
           issuer-uri: http://192.168.100.30:8181/realms/spring-boot-microservices-realm
 
+management:
+  zipkin:
+    tracing:
+      endpoint: http://192.168.100.30:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
 
 server:
   port: 8080

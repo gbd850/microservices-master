@@ -29,6 +29,12 @@ management:
   endpoint:
     health:
       show-details: always
+  zipkin:
+    tracing:
+      endpoint: http://192.168.100.30:9411/api/v2/spans
+  tracing:
+     sampling:
+        probability: 1.0
 
 # Resilience4j Properties
 resilience4j:
@@ -55,4 +61,3 @@ resilience4j:
       inventory:
          maxAttempts: 3
          waitDuration: 5s
-
